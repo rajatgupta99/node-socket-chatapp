@@ -8,15 +8,13 @@ socket.on('disconnect', function(){
   console.log("DISCONNECTED FROM SERVER");
 });
 
-socket.on('newEmail', function (data) {
-  console.log(data);
-});
-
 socket.on('newMessage', function(data){
+  $('.allmessages').append("<h7>"+data.from+": "+data.text+"</h7></br></br>");
   console.log(data);
 });
 
 socket.on('fromAdmin', function(data){
+  $('.welcomeMessage').append(data.text);
   console.log(data);
 });
 
@@ -27,3 +25,20 @@ socket.on('newUserJoined', function(data){
 socket.on('userDisconnected', function(data){
   console.log(data);
 })
+
+var uid = Math.random();
+
+$('#message-form').on('submit', function(e){
+  e.preventDefault();
+  var text = $('[name=message]').val().trim();
+  $('[name=message]').val('');
+
+  if(text !== ""){
+    socket.emit('createMesssage', {
+      from: uid,
+      text: text
+    }, function(data){
+      console.log(data);
+    })
+  }
+});
