@@ -15,3 +15,11 @@ socket.on('newEmail', function (data) {
 socket.on('newMessage', function(data){
   console.log(data);
 });
+
+socket.on('fromAdmin', function(data){
+  console.log(data);
+});
+
+socket.on('newUserJoined', function(data){
+  console.log(data);
+});
