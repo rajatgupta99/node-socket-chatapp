@@ -23,3 +23,7 @@ socket.on('fromAdmin', function(data){
 socket.on('newUserJoined', function(data){
   console.log(data);
 });
+
+socket.on('userDisconnected', function(data){
+  console.log(data);
+})
