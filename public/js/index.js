@@ -9,7 +9,9 @@ socket.on('disconnect', function(){
 });
 
 socket.on('newMessage', function(data){
-  $('.allmessages').append("<p>"+data.from+": "+data.text+"</p></br></br>");
+  var li = $("<li></li>");
+  li.text(`${data.from}: ${data.text}`);
+  $('.allmessages').append(li);
   console.log(data);
 });
 
