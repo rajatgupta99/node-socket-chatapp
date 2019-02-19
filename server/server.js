@@ -16,9 +16,9 @@ app.use(express.static(publicPath));
 io.on('connect', (socket) =>  {
   console.log("New User Connected!");
 
-  socket.emit('fromAdmin', message.generateMessage("Admin", "Welcome to the node chat app!"));
+  //socket.emit('fromAdmin', message.generateMessage("Admin", "Welcome to node chat app."));
 
-  socket.broadcast.emit('newUserJoined', message.generateMessage("Admin", "New User Joined"));
+  socket.broadcast.emit('newUserJoined', message.generateMessage("Admin", "<li class='newuserjoined'><i class='fal fa-user'></i> New User Joined</li>"));
 
   socket.on('createMesssage', (data, callback) =>  {
     console.log(data);

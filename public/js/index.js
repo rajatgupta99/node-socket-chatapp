@@ -2,10 +2,12 @@ var socket = io();
 
 socket.on('connect', function(){
   console.log("CONNECTED TO SERVER");
+  $('#user-status').html('').append("<span class='current-user-status'><i class='fas fa-circle online'></i> Online</span>");
 });
 
 socket.on('disconnect', function(){
   console.log("DISCONNECTED FROM SERVER");
+  $('#user-status').html('').append("<span class='current-user-status'><i class='fas fa-circle offline'></i> Offline</span>");
 });
 
 socket.on('newMessage', function(data){
@@ -16,10 +18,10 @@ socket.on('newMessage', function(data){
 });
 
 socket.on('newLocationMessage', function(data){
-  var li = $(`<li></li>`);
-  var a = $(`<a href='' target='_blank'>My Current Location</a>`);
+  var li = $(`<li class="locationBox"></li>`);
+  var a = $(`<a href='' target='_blank'><i class="far fa-map-marked-alt locationIcon"></i></a>`);
 
-  li.text(`${data.from}: `);
+  li.text(`${data.from} shared the location  `);
   a.attr('href', data.url);
   li.append(a);
 
@@ -33,6 +35,7 @@ socket.on('fromAdmin', function(data){
 });
 
 socket.on('newUserJoined', function(data){
+  $('.allmessages').append(data.text);
   console.log(data);
 });
 
@@ -45,13 +48,13 @@ var uid = Math.random();
 $('#message-form').on('submit', function(e){
   e.preventDefault();
   var text = $('[name=message]').val().trim();
-  $('[name=message]').val('');
 
   if(text !== ""){
     socket.emit('createMesssage', {
       from: uid,
       text: text
     }, function(data){
+      $('[name=message]').val('');
       console.log(data);
     })
   }
@@ -64,6 +67,8 @@ locationButton.on('click', function(e){
     return alert('Geolocation not supported by your browser.');
   }
 
+  locationButton.attr('disabled', 'disabled').text('Sending Location...');
+
   navigator.geolocation.getCurrentPosition(function(position) {
     console.log(`Latitude: ${position.coords.latitude}`);
     console.log(`Longitude: ${position.coords.longitude}`);
@@ -71,7 +76,10 @@ locationButton.on('click', function(e){
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     });
+
+    locationButton.removeAttr('disabled').text('Share Location');
   }, function(){
+      locationButton.removeAttr('disabled').text('Share Location');
       alert('Unable to fetch location');
   });
 });

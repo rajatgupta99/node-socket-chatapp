@@ -35,7 +35,12 @@ button:hover {
 
 button:disabled {
   cursor: default;
-  background: #698ea5;
+  background: #fff;
+}
+
+button:disabled:hover {
+  cursor: default;
+  background: #fff;
 }
 
 .centered-form {
@@ -127,9 +132,9 @@ button:disabled {
 }
 
 .chat__footer {
-  background: #e6eaee;
+  background-color: #fff;
   display: flex;
-  padding: 10px;
+  padding: 10px 10px 15px 10px;
   /*height: 60px;*/
   flex-shrink: 0;
 }
@@ -144,9 +149,11 @@ button:disabled {
 }
 
 .chat__footer input {
-  border: none;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
   padding: 10px;
   flex-grow: 1;
+  outline:none;
 }
 
 .chat__messages {
@@ -192,4 +199,56 @@ button:disabled {
   .chat__footer button {
     margin-right: 0px;
   }
+}
+
+.welcomeMessage{
+  padding: 10px 5px 10px 20px;
+  background-color: #f7f7f7;
+}
+
+.allmessages li{
+  padding: 5px 5px 5px 10px;
+}
+
+.people-icon{
+  font-size:20px;
+}
+
+.current-user-status{
+  font-size:16px;
+  color: #908f8f;
+}
+
+.online{
+  color: #63c363;
+  font-size: 15px;
+}
+
+.offline{
+  color:#d6d6d6;
+  font-size: 15px;
+}
+
+.newuserjoined{
+  color: #cbcbcb;
+}
+
+.locationIcon{
+  font-size: 24px;
+  color: #3b3b3b;
+}
+
+.locationBox:hover{
+  cursor:pointer;
+}
+
+button{
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  color: #838383;
+}
+
+button:hover{
+  background-color: #eaeaea;
+  color: #525252;
 }
