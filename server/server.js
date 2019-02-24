@@ -24,11 +24,7 @@ io.on('connect', (socket) =>  {
     console.log(data);
     io.emit('newMessage', message.generateMessage(data.from, data.text));
     callback("Message Delivered :)");
-    // socket.broadcast.emit('newMessage', {
-    //     from: data.from,
-    //     text: data.text,
-    //     createdAt: new Date().getTime()
-    // });
+
   });
 
   socket.on('createLocationMessage', (data) =>  {

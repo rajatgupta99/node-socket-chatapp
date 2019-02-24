@@ -11,17 +11,19 @@ socket.on('disconnect', function(){
 });
 
 socket.on('newMessage', function(data){
+  var formattedTime = moment(data.createdAt).format('h:mm:ss a');
   var li = $("<li></li>");
-  li.text(`${data.from}: ${data.text}`);
+  li.text(`${data.from} (${formattedTime}): ${data.text}`);
   $('.allmessages').append(li);
   console.log(data);
 });
 
 socket.on('newLocationMessage', function(data){
+  var formattedTime = moment(data.createdAt).format('h:mm:ss a');
   var li = $(`<li class="locationBox"></li>`);
-  var a = $(`<a href='' target='_blank'><i class="far fa-map-marked-alt locationIcon"></i></a>`);
+  var a = $(`<a href='' target='_blank'><i class="far fa-map-pin locationIcon"></i></a>`);
 
-  li.text(`${data.from} shared the location  `);
+  li.text(`${data.from} (${formattedTime}): My current location  `);
   a.attr('href', data.url);
   li.append(a);
 
