@@ -11,25 +11,29 @@ socket.on('disconnect', function(){
 });
 
 socket.on('newMessage', function(data){
-  var formattedTime = moment(data.createdAt).format('h:mm:ss a');
-  var li = $("<li></li>");
-  li.text(`${data.from} (${formattedTime}): ${data.text}`);
-  $('.allmessages').append(li);
-  console.log(data);
+  var formattedTime = moment(data.createdAt).format('h:mm a');
+  var template = $('#messsage-template').html();
+  var html = Mustache.render(template, {
+    text: data.text,
+    from: data.from,
+    createdAt: formattedTime
+  });
+
+  $('.allmessages').append(html);
 });
 
 socket.on('newLocationMessage', function(data){
-  var formattedTime = moment(data.createdAt).format('h:mm:ss a');
-  var li = $(`<li class="locationBox"></li>`);
-  var a = $(`<a href='' target='_blank'><i class="far fa-map-pin locationIcon"></i></a>`);
+  var formattedTime = moment(data.createdAt).format('h:mm a');
+  var template = $('#location-messsage-template').html();
+  var html = Mustache.render(template, {
+    from: data.from,
+    createdAt: formattedTime,
+    text: 'My current location',
+    url: data.url
+  });
 
-  li.text(`${data.from} (${formattedTime}): My current location  `);
-  a.attr('href', data.url);
-  li.append(a);
-
-  $('.allmessages').append(li);
-  console.log(data);
-})
+  $('.allmessages').append(html);
+});
 
 socket.on('fromAdmin', function(data){
   $('.welcomeMessage').append(data.text);

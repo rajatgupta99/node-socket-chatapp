@@ -252,3 +252,9 @@ button:hover{
   background-color: #eaeaea;
   color: #525252;
 }
+
+.message__title p{
+  font-weight:bold;
+  padding-right:10px;
+  margin-bottom:0px;
+}
