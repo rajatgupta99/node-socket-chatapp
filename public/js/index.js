@@ -1,5 +1,21 @@
 var socket = io();
 
+function scrollToBottom(){
+  //Selectors
+  var messages = $('.allmessages');
+  var newMessage = messages.children('li:last-child');
+  //Heights
+  var clientHeight = messages.prop('clientHeight');
+  var scrollTop = messages.prop('scrollTop');
+  var scrollHeight = messages.prop('scrollHeight');
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight();
+
+  if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight){
+    messages.scrollTop(scrollHeight);
+  }
+}
+
 socket.on('connect', function(){
   console.log("CONNECTED TO SERVER");
   $('#user-status').html('').append("<span class='current-user-status'><i class='fas fa-circle online'></i> Online</span>");
@@ -20,6 +36,7 @@ socket.on('newMessage', function(data){
   });
 
   $('.allmessages').append(html);
+  scrollToBottom();
 });
 
 socket.on('newLocationMessage', function(data){
@@ -33,6 +50,7 @@ socket.on('newLocationMessage', function(data){
   });
 
   $('.allmessages').append(html);
+  scrollToBottom();
 });
 
 socket.on('fromAdmin', function(data){
