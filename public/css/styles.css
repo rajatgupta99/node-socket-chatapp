@@ -49,12 +49,7 @@ button:disabled:hover {
   height: 100vh;
   width: 100vw;
   justify-content: center;
-  background: -moz-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* ff3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(49,84,129,1)), color-stop(100%, rgba(39,107,130,1))); /* safari4+,chrome */
-  background: -webkit-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* opera 11.10+ */
-  background: -ms-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* ie10+ */
-  background: linear-gradient(325deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* w3c */
+  background: #333333;
 }
 
 .centered-form__form {
@@ -92,12 +87,7 @@ button:disabled:hover {
   overflow-y: scroll;
   width: 260px;
   height: 100vh;
-  background: -moz-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* ff3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(49,84,129,1)), color-stop(100%, rgba(39,107,130,1))); /* safari4+,chrome */
-  background: -webkit-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* opera 11.10+ */
-  background: -ms-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* ie10+ */
-  background: linear-gradient(325deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* w3c */
+  background: #ad4545;
 }
 
 .chat__sidebar h3 {
@@ -108,14 +98,13 @@ button:disabled:hover {
 
 .chat__sidebar ul {
   list-style-type: none;
+  padding-top: 10px;
+  border-top: 1px solid #fff;
 }
 
 .chat__sidebar li {
-  background: #e6eaee;
-  border: 1px solid #e1e1e1;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
+  color:#fff;
+  padding: 5px 5px 5px 30px;
 }
 
 .chat__main {
@@ -222,6 +211,13 @@ button:disabled:hover {
 .online{
   color: #63c363;
   font-size: 15px;
+}
+
+.online-sidebar{
+  color: #63c363;
+  font-size: 10px;
+  vertical-align: middle;
+  padding-right:5px;
 }
 
 .offline{

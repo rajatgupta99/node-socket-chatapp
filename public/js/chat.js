@@ -19,11 +19,32 @@ function scrollToBottom(){
 socket.on('connect', function(){
   console.log("CONNECTED TO SERVER");
   $('#user-status').html('').append("<span class='current-user-status'><i class='fas fa-circle online'></i> Online</span>");
+
+  var params = $.deparam(window.location.search);
+  socket.emit('join', params, function(err){
+    if(err){
+      alert(err);
+      window.location.href = '/';
+    }else{
+
+    }
+  })
 });
 
 socket.on('disconnect', function(){
   console.log("DISCONNECTED FROM SERVER");
   $('#user-status').html('').append("<span class='current-user-status'><i class='fas fa-circle offline'></i> Offline</span>");
+});
+
+socket.on('updateUserList', function (users) {
+  var ul = $('<ul></ul>');
+
+  users.forEach(function(user){
+    ul.append($(`<li><i class='fas fa-circle online-sidebar'></i> ${user}</li>`));
+  });
+
+  $('#users').html(ul);
+
 });
 
 socket.on('newMessage', function(data){
@@ -63,19 +84,12 @@ socket.on('newUserJoined', function(data){
   console.log(data);
 });
 
-socket.on('userDisconnected', function(data){
-  console.log(data);
-})
-
-var uid = Math.random();
-
 $('#message-form').on('submit', function(e){
   e.preventDefault();
   var text = $('[name=message]').val().trim();
 
   if(text !== ""){
     socket.emit('createMesssage', {
-      from: uid,
       text: text
     }, function(data){
       $('[name=message]').val('');

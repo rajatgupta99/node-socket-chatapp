@@ -4,27 +4,39 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 const message = require('./utils/message');
+const {isRealString} = require('./utils/validation');
+const {Users} = require('./utils/users');
 
 var app = express();
 var publicPath = path.join(__dirname, '..', '/public');
 var PORT = process.env.PORT || 3000;
 var server = http.createServer(app);
 var io = socketIO(server);
+var users = new Users();
 
 app.use(express.static(publicPath));
 
 io.on('connect', (socket) =>  {
   console.log("New User Connected!");
 
-  //socket.emit('fromAdmin', message.generateMessage("Admin", "Welcome to node chat app."));
+  socket.on('join', (params, callback)  =>  {
+        if(!isRealString(params.name) || !isRealString(params.room)){
+          return callback('Name and room are required');
+        }
 
-  socket.broadcast.emit('newUserJoined', message.generateMessage("Admin", "<li class='newuserjoined'><i class='fal fa-user'></i> New User Joined</li>"));
+        socket.join(params.room);
+        users.removeUser(socket.id);
+        users.addUser(socket.id, params.name, params.room);
+
+        io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+        socket.broadcast.to(params.room).emit('newUserJoined', message.generateMessage("Admin", `<li class='newuserjoined'><i class='fal fa-user'></i> ${params.name} joined this room</li>`));
+  });
 
   socket.on('createMesssage', (data, callback) =>  {
     console.log(data);
-    io.emit('newMessage', message.generateMessage(data.from, data.text));
+    var author = users.getUser(socket.id);
+    io.emit('newMessage', message.generateMessage(author.name, data.text));
     callback("Message Delivered :)");
-
   });
 
   socket.on('createLocationMessage', (data) =>  {
@@ -32,9 +44,13 @@ io.on('connect', (socket) =>  {
   })
 
   socket.on('disconnect', ()  =>  {
-    console.log('USER DISCONNECTED');
+    var user = users.removeUser(socket.id);
 
-    socket.broadcast.emit('userDisconnected', message.generateMessage("Admin", "A user disconnectd from the app."));
+    if(user){
+      io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+
+      io.to(user.room).emit('newUserJoined', message.generateMessage("Admin", `<li class='newuserjoined'><i class='fal fa-user'></i> ${user.name} left this room</li>`));
+    }
   });
 });
 
