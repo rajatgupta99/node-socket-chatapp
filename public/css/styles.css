@@ -87,7 +87,7 @@ button:disabled:hover {
   overflow-y: scroll;
   width: 260px;
   height: 100vh;
-  background: #ad4545;
+  background: #561c1c;
 }
 
 .chat__sidebar h3 {
